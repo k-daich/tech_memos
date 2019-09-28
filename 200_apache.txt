@@ -1,0 +1,4 @@
+
+■アクセスログをローテートさせる
+	CustomLog "|/usr/local/apache2/bin/rotatelogs /usr/local/apache2/logs/nyaruko_access_log_%Y%m%d 86400 540" common
+	  CustomLog "|/usr/sbin/rotatelogs  /var/unyo/apache_front/blog/access_log.%Y-%m-%d 86400 540" combined

@@ -1,0 +1,328 @@
+
+---------------------------------  ssh  -----------------------------------
+■sshログインする
+	ssh {user}@{IP}
+  - OPTION
+	-p : 接続ポート指定（デフォで22）
+	-i : 認証鍵を使用したログイン
+		ssh -i {使用する鍵指定} {user}@{IP} -p {port}
+
+--------------------------------  useradd  ---------------------------------
+■ユーザを登録する
+	useradd {user_name}
+■パスワードを登録する
+	passwd {user_name}
+	　⇒パスワード入力待ちになる
+
+--------------------------------  usermod  ---------------------------------
+■ユーザの属性を変更する
+	usermod -{option} {option_param} {user_name}
+  - OPTION
+	-L	--lock	ユーザーをロックする（ログインできなくなる）
+	-U	--unlock	ユーザーのロックを解除する
+	-d パス	--home パス	ユーザーのホームディレクトリを変更する（現ディレクトリの内容を移動したい場合は「-m」オプションを同時に指定）
+	-m	--move-home	（「-d」オプション指定時）現ホームディレクトリの内容を新たな場所に移動する
+	-R ディレクトリ	--root ディレクトリ	「chroot」するディレクトリを指定する
+	-p パスワード	--password パスワード	新たなパスワードを指定する（パスワードは暗号化されたものを指定）
+	-s シェル	--shell シェル	ユーザーのシェルを変更する（指定を空白にした場合はデフォルトのシェル）
+	-g グループ	--gid グループ	プライマリーグループを変更する
+	-G グループ	--groups グループ	セカンダリーグループを変更する（複数ある場合は「,」で区切って指定）。変更ではなく追加したい場合は「-a」オプションを同時に指定する
+	-a	--append	「-G」オプションで指定したグループをセカンダリーグループに追加する
+	-u UID	--uid UID	ユーザーIDを変更する
+	-o	--non-unique	（「-U」オプション指定時）一意でないユーザー（UIDの重なるユーザー）を許可する
+	-c コメント	--comment コメント	「/etc/passwd」のコメント欄（「GECOS」フィールド。ユーザーの所属やフルネームなどを記述する）を設定する
+
+■所属グループの変更
+	usermod -G {group_name} {user_name}
+
+
+---------------------------------  chown  ---------------------------------
+■所有者/所有グループを変更する
+	chown {owner}:{group} {dir}
+
+---------------------------------  chmod  ---------------------------------
+■ファイルの属性を変更
+	chmod {000-777} {dir/file}
+
+■ファイル権限を変更する
+	chown {user}:{group}
+	
+
+-----------------------------------  su  ----------------------------------
+■ユーザを切り替える(substitute)
+	su {dest_user}
+  - OPTION
+	-,-l	--login	ログインシェルにより起動させる（環境変数等も読み込む）
+	-s		--shell	起動シェルを指定する
+
+-----------------------------------  alias  ----------------------------------
+■rcファイルへのエイリアス登録
+	alias be='bundle exec'
+
+  - 登録してるもの
+	alias ll='ls -la --color=auto'
+
+------------------------------  公開鍵設定  -------------------------------
+①公開鍵の置き場作成
+	mkdir ~/.ssh
+	chmod 700 .ssh
+②公開鍵の生成
+	・gitをインストールする
+	・ssh-keygenコマンドを使用して認証鍵を作成する
+	（秘密鍵名や秘密鍵生成フレーズを聞かれるが、デフォルトで構わない）
+	※秘密鍵のファイル名等はデフォルトにしておくと、sshコマンド時に鍵名指定を省略できるので便利
+③公開鍵を接続先サーバへ配置する
+	id_rsa.pubを接続先サーバにauthorized_keysにリネームした上で配置する
+④SSH設定の強化（接続ポート番号の変更）
+	壱.sshd設定ファイルを編集する（/etc/ssh/sshd_config）
+		1.コメントアウトされているPort定義を有効化
+			#Port 22 ⇒ Port {Port}
+		2.パスワード認証を無効化
+			PasswordAuthentication yes ⇒ no
+		3.Rootユーザでのログイン無効化
+			#PermitRootLogin yes ⇒ PermitRootLogin no
+	弐.sshdを再起動して設定ファイルの変更を反映
+		# service sshd restart
+
+
+----------------------------------  git  -----------------------------------
+■gitクライアント設定
+	設定確認
+	git config -l
+	ユーザ名を設定
+	git config --global user.name {user_name}
+	メールアドレスを設定
+	git config --global user.email {mail_address}
+	色分けの有効化
+	git config --global color.ui true
+
+■諸設定ファイル
+	.gitignore
+		本ファイルが存在するディレクトリ配下にて、定義されたファイルパターンをgit管理対象外にする
+
+■ローカルリポジトリの作成
+	初期化
+	git init
+
+	初期化（ノンベアリポジトリ）
+	git init --bare --shared
+
+■ステージング上げる前用コマンド
+	ステージング上げる前状態の変更内容を確認
+	git diff {revision_hash} {revision_hash}
+	変更ファイル（ステージング上げる前）の変更を戻す
+	git checkout -- {file_name}
+
+■ステージング関連用コマンド
+	ステージングに上げる
+	git add {file_name}
+	カレントディレクトリ配下をすべてadd
+	git add .
+	ステージングに上がった変更内容を確認する
+	git diff --cached
+
+
+■コミット関連用コマンド
+	コミットを行う
+	git commit
+	直前のコミットの内容を変更
+	git commit --amend
+	特定のコミット状態に戻る
+	git reset --hard {revisionID or HEAD}
+
+■gitの変更状況/ステージング状況を表示
+	git status
+
+■ローカルリポジトリの作成
+	コミット履歴を見る
+	git log
+	コミット履歴を略称で表示させる
+	git log --oneline
+	コミット履歴をソース変更情報付きで表示
+	git log -p
+	コミット履歴をソースファイル名単位でコンパクトに表示
+	git log --stat
+
+■ブランチ関連
+	どのブランチにいるのかを確認する
+	git branch
+	ブランチを作成
+	git branch {branch_name}
+	特定ブランチにスイッチ
+	git checkout {branch_name}
+	現在のマスターorブランチに、異なるブランチをマージ
+	git merge {branch_name}
+	マージでのコンフリクトを解決する
+		コンフリクト記述のあるソースを直し、add & commitすれば良い 
+	ブランチを削除
+	git branch -d {branch_name}
+
+■タグ（revisionIDの別名）を作成する
+	git tag {tag_name} {revisionID}
+	 ※commitIDを省略すると最新リビジョンIDにタグを設定する
+
+■リモートリポジトリについて
+  ■リモートリポジトリの追加
+	※リモートリポジトリがローカルにある場合
+	git remote add {remote_repo_name} {remote_reop_dir}
+
+  ■リモートURL設定
+	※リモートリポジトリがローカルにある場合
+	git remote set-url {remote_repo_name} {remote_reop_dir}
+	※SSH
+	git remote set-url origin ssh://{user_name}@{IP}:{port}/{full_path}
+	※HTTP
+	git remote set-url origin http://{IP}:{port}/{path_under_context}
+
+  ■確認
+	git remote -v
+
+  ■削除
+	git remote rm {remote_repo_name}
+
+  ■リモートにローカルのコミットを反映
+	git push {remote_repo_name} {local_branch_name}
+
+  ■リモートの変更をローカルに反映
+	git pull {remote_repo_name} {local_branch_name}
+
+
+■リモートリポジトリをクローンする
+	※ローカルリポジトリ
+	git clone {local_repo_dir} {create_branch_name}
+	※ssh
+	git clone ssh://[user@]host.xz[:port]/{full_path}
+
+
+----------------------------------  scp  -----------------------------------
+■ファイルの転送
+	scp -P {port} {local_dir} {user_name}@{IP}:/{full_dir}
+  - OPTION
+	-r : ディレクトリごと転送
+	-i : 鍵認証を使用して転送(無指定の場合はデフォルト鍵ファイルを使用)
+		ssh -i {鍵ファイルPath} {local_dir} {user_name}@{IP}:/{full_dir}
+
+  - for example
+	scp -P31010 apache@sakura1001:/var/unyo/apache_front/blog/error_log ./
+
+-----------------------------------------------------------------------------
+---------------------------------  bash  ------------------------------------
+-----------------------------------------------------------------------------
+
+--------------------------------  TMOUT  ---------------------------------
+■bashのタイムアウトによる自動ログオフ時間を設定
+	export TMOUT={time}
+	※0指定は無期限
+
+-----------------------------------------------------------------------------
+----------------------------------  vi  ------------------------------------
+-----------------------------------------------------------------------------
+■行数表示
+	:set number
+	:set nonumber
+
+■最終行に移動
+	shift + g
+
+
+-----------------------------------  iconv  -----------------------------------
+■文字コード変換
+	iconv -f EUC-JP -t SHIFT_JIS from-file.txt > to-file.txt
+    -f from文字コード
+    -t to文字コード
+    -c 変換できない文字は無視する（変換できない文字はToファイルから無くなる）
+
+-----------------------------------  nkf  -----------------------------------
+■文字コード変換
+	nkf -e from-file.txt > to-file.txt
+    -e EUC-JPに変換
+    -s SHIFT_JISに変換
+    -j ISO-2022-JPに変換
+    ※入力文字コードは自動判別する。
+      万が一、判別に失敗している場合は大文字指定で上記のパラメータを指定する。
+
+-----------------------------------------------------------------------------
+----------------------------------  Linux  ----------------------------------
+-----------------------------------------------------------------------------
+
+-----------------------------------  yum  -----------------------------------
+■アップデートが無いか確認する
+	yum check-update
+
+■アップデートを実施
+	yum update
+
+■インストールを実施（依存関係も自動解決）
+	yum install {package_name}
+
+■リポジトリからパッケージを検索する
+	yum search {package_name}
+
+■リポジトリからパッケージを削除する
+	yum remove {package_name}
+
+■インストールされているパッケージ情報を表示する
+	yum info {package_name}
+
+■インストールされているパッケージ一覧を表示する
+	yum list installed
+
+-----------------------------------  yum  -----------------------------------
+■サーバ起動時にサービスを自動起動させる設定の有効/無効化
+	chkconfig {service_name} [on/off]
+
+■自動起動しているサービスの一覧表示
+	chkconfig --list
+
+--------------------------------  service  ---------------------------------
+■サービスの状態確認/起動/停止
+	service {service_name} status
+	service {service_name} start
+	service {service_name} restart
+	service {service_name} stop
+
+■サービス名の一覧表示
+	service --status-all
+
+--------------------------------  iptables  ---------------------------------
+■設定ファイルPath
+	/etc/sysconfig/iptables
+■ipatables（Linuxのファイアウォール）の設定参照
+	iptables -L
+
+--------------------------------  wheel  ---------------------------------
+■sudoの実行権限の編集
+	visudo
+	編集例：wheel（意：大物）グループへのsudo権限実行権限付与
+
+
+
+-----------------------------------------------------------------------------
+----------------------------------  httpd  ----------------------------------
+-----------------------------------------------------------------------------
+■httpd.confのパス
+	/etc/httpd/conf/httpd.conf
+
+--------------------------  Directoryディレクティブ  -------------------------
+■指定したディレクトリ配下にのみ設定を有効化させる
+	<Directory {dir}>
+		xxxx
+	</Directory>
+
+
+-------------------------------  セキュリティ  ------------------------------
+■応答ヘッダ：Serverに設定する情報を指定
+	ServerTokens OS    ⇒"Apache/2.0.41(Unix)"を返す
+	ServerTokens Prod  ⇒"Apache"を返す
+	※デフォルトではOSだが、OSバージョンが知られるのでProdが推奨される
+
+■サーバが生成するドキュメントの最下行に付与するフッタの設定
+	ServerSignature On    ⇒バーチャルホストのServerNameが表示される
+	ServerSignature Email ⇒バーチャルホストのServerName,mailto:が表示される
+	ServerSignature Off   ⇒フッタを表示しない
+	※デフォルトではOn
+
+■サーバがシンボリックリンクを辿れるようになる
+	Options Indexes FollowSymLinks   ⇒辿れる
+	Options -Indexes FollowSymLinks  ⇒辿れない
+

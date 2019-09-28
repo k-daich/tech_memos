@@ -1,0 +1,6 @@
+■属性指定（クラス）
+	/html/body/div/span[@class='regular_price']
+
+
+■子孫指定
+	//a

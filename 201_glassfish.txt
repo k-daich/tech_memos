@@ -1,0 +1,24 @@
+
+------------------------------------------ 管理画面 ------------------------------------------
+
+■起動コマンド
+	cd C:\pleiades\glassfish5\bin
+	asadmin start-domain
+
+■停止コマンド
+	cd C:\pleiades\glassfish5\bin
+	asadmin stop-domain
+
+■管理画面URL
+	http://localhost:4848
+
+------------------------------------------ 開発画面 ------------------------------------------
+■デフォルトアクセスURL
+	http://localhost:8080
+
+
+------------------------------------------ 硝子魚設定 ------------------------------------------
+■ログレベル設定
+	C:\glassfish4\glassfish\domains\domain1\config\logging.properties
+
+

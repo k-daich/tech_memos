@@ -1,0 +1,6 @@
+
+---------------------------------  maven  -----------------------------------
+■特定のテストクラスのみ実行
+	mvn test -Dtest={TestClass}
+	[例] mvn test -Dtest=test.jp.co.daich.selenium.actions.RkRkUrlGetTest
+
