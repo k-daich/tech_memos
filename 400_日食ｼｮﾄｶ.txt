@@ -1,4 +1,4 @@
-�����̂�ύX���A�����ő��ɔ��f������
+■名称を変更し、自動で他に反映させる
 	alt + shift + r
 
 
@@ -6,55 +6,55 @@
 
 
 
-��20�� ctrl + alt + k �X�l�[�N�P�[�X�ƃL�������P�[�X�̐؂�ւ�
-	�ϐ����⃁�\�b�h����I��������Ԃ�ctrl + alt + k
+第20位 ctrl + alt + k スネークケースとキャメルケースの切り替え
+	変数名やメソッド名を選択した状態でctrl + alt + k
 
-��19�� ctrl + shift + o import���̕Ґ�
-	ctrl + shift + o�ŕs�v��import�����폜������A�\�[�g������o����̂ł����A�\�z�O�Ɏ󂯂����������ł��B
+第19位 ctrl + shift + o import文の編成
+	ctrl + shift + oで不要なimport文を削除したり、ソートしたり出来るのですが、予想外に受けが悪かったです。
 
-��18�� ctrl + Right or ctrl + Left �ŋ�؂�̗ǂ��ꏊ�փJ�[�\���ړ�
-	ctrl + Right �� ctrl + Left�ŁA�P��̋��ڂȂǂ̋�؂肪�����ꏊ�֏����J�[�\�����ړ��ł��܂��B
+第18位 ctrl + Right or ctrl + Left で区切りの良い場所へカーソル移動
+	ctrl + Right や ctrl + Leftで、単語の境目などの区切りがいい場所へ順次カーソルを移動できます。
 
-��17�� ctrl + space �e���v���[�g�E�v���|�[�U��
-	���Ƃ���foreach�Ɠ��͂���ctrl + space�ŁA�g��for�������܂��B
+第17位 ctrl + space テンプレート・プロポーザル
+	たとえばforeachと入力してctrl + spaceで、拡張for文を作れます。
 
-��16�� ctrl + e �^�u������
-	ctrl + e�ŊJ���Ă���^�u�����X�g�ɂ��Ă���܂��B
+第16位 ctrl + e タブを検索
+	ctrl + eで開いているタブをリストにしてくれます。
 
-��15�� alt + shift + c ���\�b�h�̃V�O�l�`���ύX
+第15位 alt + shift + c メソッドのシグネチャ変更
 
-��14�� alt + shift + Up or alt + shift + Down �I��͈͂̊g��k��
-	�ϐ����s��for�������\�b�h �Ƃ�����ɁA�I��͈͂��A���X�ɃX�R�[�v�i�H�j���L���Ȃ���g��A�����Ĕ��΂ɏk���ł��܂��B
-��13�� alt + shift + t -> a �萔�𒊏o
-	���l��萔�ɒ��o�ł��܂��B
+第14位 alt + shift + Up or alt + shift + Down 選択範囲の拡大縮小
+	変数→行→for文→メソッド という具合に、選択範囲を、徐々にスコープ（？）を広げながら拡大、そして反対に縮小できます。
+第13位 alt + shift + t -> a 定数を抽出
+	直値を定数に抽出できます。
 
-��12�� ctrl + . ���̌x���E�G���[�փW�����v
+第12位 ctrl + . 次の警告・エラーへジャンプ
 
-��8�ʂ�ctrl + 1�Ƒg�ݍ��킹��΁A���΂₭�G���[�̏C�����o���܂��B
+第8位のctrl + 1と組み合わせれば、すばやくエラーの修正が出来ます。
 
-��11�� alt + shift + l ���[�J���ϐ��̒��o
+第11位 alt + shift + l ローカル変数の抽出
 
-��10�� alt + a -> f �t�@�C������
+第10位 alt + a -> f ファイル検索
 
-��9�� �ϐ�����r���܂Ń^�C�v����ctrl + space �ϐ����⊮
+第9位 変数名を途中までタイプしてctrl + space 変数名補完
 
-��8�� �G���[��x���̉ӏ���I������ctrl + 1 �C�����@�������Ă����
+第8位 エラーや警告の箇所を選択してctrl + 1 修正方法を教えてくれる
 
-��7�� ctrl + shift + f �R�[�h�t�H�[�}�b�g
-	ctrl + shift + f�ŃC���f���g��X�y�[�X���������I�ɐ����Ă���܂��B
+第7位 ctrl + shift + f コードフォーマット
+	ctrl + shift + fでインデントやスペースやらを自動的に整えてくれます。
 
-��6�� �N���X�����Ń��\�b�h��������������ctrl + space ���\�b�h�쐬
+第6位 クラス直下でメソッド名だけを書いてctrl + space メソッド作成
 
-��5�� alt + Right or alt + Left �߂�E�i��
-	alt + Right or alt + Left �ŊJ���Ă����ꏊ��߂�����i�񂾂�o���܂��B
+第5位 alt + Right or alt + Left 戻る・進む
+	alt + Right or alt + Left で開いていた場所を戻ったり進んだり出来ます。
 
-��4�� ctrl + d �s�폜
-	ctrl + d�ŃJ�[�\��������s���폜�ł��܂��B
+第4位 ctrl + d 行削除
+	ctrl + dでカーソルがある行を削除できます。
 
 
-��2�� ctrl + / �R�����g�A�E�g
-	ctrl + /�ŃJ�[�\��������s���R�����g�A�E�g�ł��܂��B
-	�����s�I�����Ă����ԂŎg���΁A�����s�ۂ��ƃR�����g�A�E�g�ł��܂��B
+第2位 ctrl + / コメントアウト
+	ctrl + /でカーソルがある行をコメントアウトできます。
+	複数行選択している状態で使えば、複数行丸ごとコメントアウトできます。
 
-��1�� ctrl + alt + h �Ăяo���K�w���J��
-	���\�b�h�錾�̏�⃁�\�b�h�̒�`�̒���ctrl + alt + h�ŁA���̃��\�b�h���ǂ�����Ăяo����Ă��邩�𒲂ׂ邱�Ƃ��o���܂��B
+第1位 ctrl + alt + h 呼び出し階層を開く
+	メソッド宣言の上やメソッドの定義の中でctrl + alt + hで、そのメソッドがどこから呼び出されているかを調べることが出来ます。

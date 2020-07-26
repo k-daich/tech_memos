@@ -21,9 +21,15 @@
 ■作成
 	CREATE USER {user_name} IDENTIFIED BY [PASSWORD] '{PassWord}';
 	※パスワード無： CREATE USER {user_name};
+	
+■パスワードポリシーの照会
+	SHOW VARIABLES LIKE 'validate_password%';
 
 ■一覧を表示
 	select Host, User, Password from mysql.user;
+
+■自分の名を知る
+	select user();
 
 ■削除
 	drop user {user_name};
@@ -32,9 +38,52 @@
 ■一覧を表示
 	SHOW TABLES FROM {DB_name}
 
+■作成
+	create table T_SENTENCE (
+	  id varchar(20) not null,
+	  title varchar(15) unique not null,
+	  primary key(id));
+
+■削除
+	drop table T_SENTENCE;
+
+
+--------------------------------  grant  ------------------------------------
+■権限付与
+	GRANT select,insert,update,delete ON {database_name}.{* or table_name} TO {user_name}@'localhost' IDENTIFIED BY 'password';
+	※全権付与
+	GRANT all ON {database_name}.{* or table_name} TO {user_name}@'localhost' IDENTIFIED BY 'password';
+
+
+--------------------------------  alter  ------------------------------------
+■PKの付与
+	ALTER TABLE {tbl_name} ADD PRIMARY KEY({col_name});
+
+■PKの削除
+	ALTER TABLE {tbl_name} DROP PRIMARY KEY;
+
+■NOT NULLの付与
+	ALTER TABLE {tbl_name} MODIFY COLUMN {col_name} NOT NULL;
+
+■列の追加
+	ALTER TABLE t_sentence ADD COLUMN `group_id` varchar(16) NOT NULL,
+	                    ADD COLUMN `order_in_group` smallint NOT NULL;
+
+■UNIQUEの付与
+	ALTER TABLE {tbl_name} ADD UNIQUE uq_key_name {col_name1 , col_name2 ... };
+
+■UNIQUEの削除
+	ALTER TABLE {tbl_name} DROP INDEX uq_key_name;
+	※UNIQUE KEYの実態はインデックスなのでDROP INDEXを使用する
+
 --------------------------------  出力  ------------------------------------
 ■ファイルに出力
 	SELECT {field_names} FROM {table_name} INTO OUTFILE '/var/lib/mysql-files/{file_name}';
 	※MySQLのデフォルト設定では、/var/lib/mysql-files/以外にファイルは作成できない。
 	(その他のディレクトリを使用したいなら@@secure_file_privを変更する必要あり)
+
+
+--------------------------------  update --------------------------------
+■基本構文
+	update db_letter.T_SENTENCE set title='2284_title' where id='2284';
 

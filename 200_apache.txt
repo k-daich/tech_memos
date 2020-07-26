@@ -1,4 +1,38 @@
 
-���A�N�Z�X���O�����[�e�[�g������
+■アクセスログをローテートさせる
 	CustomLog "|/usr/local/apache2/bin/rotatelogs /usr/local/apache2/logs/nyaruko_access_log_%Y%m%d 86400 540" common
-	  CustomLog "|/usr/sbin/rotatelogs  /var/unyo/apache_front/blog/access_log.%Y-%m-%d 86400 540" combined
+	CustomLog "|/usr/sbin/rotatelogs  /var/unyo/apache_front/blog/access_log.%Y-%m-%d 86400 540" combined
+
+■リダイレクト
+	LoadModule rewrite_module modules/mod_rewrite.so
+	
+	<Directory>
+	RewriteEngine On
+	LogLevel debug rewrite:trace8
+	RewriteRule /letter/app/(.*)$ http://localhost:8080/$1
+    </Directory>
+
+
+■キャッシュの無効化
+	Header set Pragma no-cache
+	Header set Cache-Control no-cache
+	！！！リダイレクトもキャッシュされるので注意！！！
+
+
+
+■リバースプロキシの設定
+	LoadModule access_compat_module modules/mod_access_compat.so
+	LoadModule proxy_module modules/mod_proxy.so
+
+	ProxyRequests off
+	<Proxy *>
+	    ### to AP
+	    Order deny,allow
+	    Allow from all
+	</Proxy>
+
+	### 透過proxy定義
+	ProxyPass /app http://localhost:8080/app
+	### 必ずproxyを経由してアクセスさせるための定義
+	ProxyPassReverse /app http://localhost:8080/app
+

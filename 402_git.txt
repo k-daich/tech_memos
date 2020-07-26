@@ -1,0 +1,117 @@
+----------------------------------  git  -----------------------------------
+■gitクライアント設定
+	設定確認
+	git config -l
+	ユーザ名を設定
+	git config --global user.name {user_name}
+	メールアドレスを設定
+	git config --global user.email {mail_address}
+	色分けの有効化
+	git config --global color.ui true
+
+■諸設定ファイル
+	.gitignore
+		本ファイルが存在するディレクトリ配下にて、定義されたファイルパターンをgit管理対象外にする
+
+■ローカルリポジトリの作成
+	初期化
+	git init
+
+	初期化（ノンベアリポジトリ）
+	git init --bare --shared
+
+■ステージング上げる前用コマンド
+	ステージング上げる前状態の変更内容を確認
+	git diff {revision_hash} {revision_hash}
+	変更ファイル（ステージング上げる前）の変更を戻す
+	git checkout -- {file_name}
+	変更ファイルの内容確認（ファイル名のみ）
+	git diff --name-only
+	変更ファイルの内容確認（ファイル名と変更ステータスのみ）
+	git diff --name-status
+
+■ステージング関連用コマンド
+	ステージングに上げる
+	git add {file_name}
+	カレントディレクトリ配下をすべてadd
+	git add .
+	ステージングに上がった変更内容を確認する
+	git diff --cached
+	git diff --cached --name-only
+	git diff --cached --name-status
+	ステージングに上がった変更内容を取り消す
+	git rm --cached {ファイルpath}
+
+
+
+■コミット関連用コマンド
+	コミットを行う
+	git commit
+	直前のコミットの内容を変更
+	git commit --amend
+	特定のコミット状態に戻る
+	git reset --hard {revisionID or HEAD}
+
+■gitの変更状況/ステージング状況を表示
+	git status
+
+■ローカルリポジトリの作成
+	コミット履歴を見る
+	git log
+	コミット履歴を略称で表示させる
+	git log --oneline
+	コミット履歴をソース変更情報付きで表示
+	git log -p
+	コミット履歴をソースファイル名単位でコンパクトに表示
+	git log --stat
+
+■ブランチ関連
+	どのブランチにいるのかを確認する
+	git branch
+	ブランチを作成
+	git branch {branch_name}
+	特定ブランチにスイッチ
+	git checkout {branch_name}
+	現在のマスターorブランチに、異なるブランチをマージ
+	git merge {branch_name}
+	マージでのコンフリクトを解決する
+		コンフリクト記述のあるソースを直し、add & commitすれば良い 
+	ブランチを削除
+	git branch -d {branch_name}
+
+■タグ（revisionIDの別名）を作成する
+	git tag {tag_name} {revisionID}
+	 ※commitIDを省略すると最新リビジョンIDにタグを設定する
+
+■リモートリポジトリについて
+  ■リモートリポジトリの追加
+	※リモートリポジトリがローカルにある場合
+	git remote add {remote_repo_name} {remote_reop_dir}
+
+  ■リモートURL設定
+	※リモートリポジトリがローカルにある場合
+	git remote set-url {remote_repo_name} {remote_reop_dir}
+	※SSH
+	git remote set-url origin ssh://{user_name}@{IP}:{port}/{full_path}
+	※HTTP
+	git remote set-url origin http://{IP}:{port}/{path_under_context}
+
+  ■確認
+	git remote -v
+
+  ■削除
+	git remote rm {remote_repo_name}
+
+  ■リモートにローカルのコミットを反映
+	git push {remote_repo_name} {local_branch_name}
+
+  ■リモートの変更をローカルに反映
+	git pull {remote_repo_name} {local_branch_name}
+
+
+■リモートリポジトリをクローンする
+	※ローカルリポジトリ
+	git clone {local_repo_dir} {create_branch_name}
+	※ssh
+	git clone ssh://[user@]host.xz[:port]/{full_path}
+
